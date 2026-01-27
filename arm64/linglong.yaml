@@ -5,7 +5,7 @@ version: "1"
 package:
   id: cn.org.linyaps.builder.utils
   name: ll-builder-utils
-  version: 0.0.1.2
+  version: 0.0.1.3
   kind: app
   description: |
     Utils for ll-builder
@@ -23,20 +23,20 @@ sources:
     digest: 2d8ae87a4525fbfa1db5e5eb010ff6f38140627a7004554ed88411c1843d51b2
     name: fuse
   - kind: archive
-    url: https://github.com/OpenAtom-Linyaps/linyaps-box/archive/refs/tags/2.1.0.tar.gz
-    digest: a5833d0ce4bafb33115cab422968c2ae8181aa100802cabe4b29665cd9e67b31
+    url: https://github.com/OpenAtom-Linyaps/linyaps-box/archive/refs/tags/2.1.2.tar.gz
+    digest: 70c908e3a2397d195d64d606b886c9635b13a461beea70a6cc5317e0bb6e9589
     name: linyaps-box
   - kind: archive
-    url: https://github.com/OpenAtom-Linyaps/linyaps/archive/refs/tags/1.9.10.tar.gz
-    digest: ef8ab31ec0804707c342bc4e9b3b3f7f3657c7cf0dbff9dd6b149164e617539c
+    url: https://github.com/OpenAtom-Linyaps/linyaps/archive/refs/tags/1.11.1.tar.gz
+    digest: 9c859c31f21c17861ca80b95847e4b28121e66220391b6d35dd2e6c68778c307
     name: linyaps
 build: |
   echo "$PREFIX"
 
   FUSE_TAG="3.17.1"
   EROFS_UTILS_TAG="1.8.6"
-  LINYAPS_BOX_TAG="2.1.0"
-  LINYAPS_TAG="1.9.10"
+  LINYAPS_BOX_TAG="2.1.2"
+  LINYAPS_TAG="1.11.1"
 
   # build libfuse static library
   cd /project/linglong/sources/fuse/fuse-${FUSE_TAG}
@@ -56,8 +56,8 @@ build: |
 
   # build static ll-box
   cd /project/linglong/sources/linyaps-box/linyaps-box-${LINYAPS_BOX_TAG}/
-  cmake --preset static
-  cmake --build build-static -j$(nproc)
+  sed -i 's/"version": 10/"version": 6/g' CMakePresets.json
+  cmake --workflow --preset static
   cmake --install build-static --prefix=$PREFIX
 
   cd /project/linglong/sources/linyaps/linyaps-${LINYAPS_TAG}/
