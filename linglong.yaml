@@ -27,9 +27,9 @@ sources:
     digest: 70c908e3a2397d195d64d606b886c9635b13a461beea70a6cc5317e0bb6e9589
     name: linyaps-box
   - kind: archive
-    url: https://share.cicd.getdeepin.org/linyaps-1.12.2~3b356c6c613919472670d7b73fee34eddae6e7ff.patched.tar.gz
+    url: https://share.cicd.getdeepin.org/linyaps-1.12.2.tar.gz
     name: linyaps
-    digest: 261408e8f24a38e70486687dbd9a254d85ef8dc772c1d01a4940a7adebdc8ae4
+    digest: 19d584c0cf72e599b435775f8f00a16586d87241d72766b4a5912a07ae57db9e
 build: |
   echo "$PREFIX"
 
@@ -60,7 +60,7 @@ build: |
   cmake --workflow --preset static
   cmake --install build-static --prefix=$PREFIX
 
-  cd /project/linglong/sources/linyaps/linyaps/
+  cd /project/linglong/sources/linyaps/linyaps-${LINYAPS_TAG}/
   cmake -B build-linglong -DCPM_LOCAL_PACKAGES_ONLY=true -DENABLE_TESTING=false -DBUILD_LINGLONG_BUILDER_UTILS_IN_BOX=true -DAGGRESSIVE_UAB_SIZE=ON
   cmake --build build-linglong -j$(nproc)
   cmake --install build-linglong --prefix=$PREFIX
